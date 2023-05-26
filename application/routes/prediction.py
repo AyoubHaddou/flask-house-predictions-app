@@ -8,7 +8,7 @@ from application.database.prediction import Prediction
 from application.helpers.preprocessing import (data_engineering, data_preprocessing, features_selection, neighbors_dict, 
                                                conditions_dict, sale_condition_dict, clean_columns)
 
-model = joblib.load(open('model/fit/model.joblib', 'rb'))
+model = joblib.load(open('model/fit/model_16790.joblib', 'rb'))
 prediction = Blueprint('prediction', __name__, url_prefix='/prediction')
 
 @prediction.route('/')
@@ -21,11 +21,11 @@ def predict():
     keys = [i for i in form._fields if i not in ['submit', 'csrf_token']]
     pred = 0
     if form.submit():
-        print(keys)
         dict_prediction = {}
-        for var in keys:
-            dict_prediction[var]= form[var].data
+        for key in keys:
+            dict_prediction[key]= form[key].data
         df_prediction = pd.DataFrame(dict_prediction, index=[0])
+        # Voir pour changer les noms des colonnnes idem avant de fit le model ? 
         df_prediction = features_selection(data_engineering(data_preprocessing(clean_columns(df_prediction), neighbors_dict, conditions_dict, sale_condition_dict)))
         pred = int(model.predict(df_prediction))
         dict_prediction['price'] = pred
@@ -37,7 +37,6 @@ def predict():
 @prediction.route('/history', methods=['GET','POST'])
 def history():
     prediction_id = request.args.get('id')
-    print(prediction_id)
     if prediction_id:
         Prediction.query.filter(Prediction.id == prediction_id).first().delete_from_db()
         print("user deleted")
