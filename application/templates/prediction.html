@@ -1,126 +1,52 @@
-{% extends "base.html" %}
-{% block title %}
-{% endblock %}
+{% extends "base.html" %} {% block title %} {% endblock %} {% block content %}
 
-{% block content %}
+  <div class="prediction">
+    <h1 class="pred-title">Prediction</h1>
 
-
-<div class="prediction form-sider ">
-    <div class="prediction ">
-        <h1 class="pred-title">Prediction</h1>
-  
-
-            <form action="{{url_for('prediction.predict')}}" method="POST" class="">
-            {{ form.hidden_tag() }}
-
-            {{ form.overall_qual.label(class="align")}}
-            {{ form.overall_qual(placeholder="Quelle est l'année de construction?", class="form-control") }}
+    <form action="{{url_for('prediction.predict')}}" method="POST" class="pa-10">
+        {{ form.hidden_tag() }}
             
-            {{ form.neighborhood.label()}}
-            {{ form.neighborhood(placeholder="", class="form-control") }}
-            
-            {{ form.year_remod_add.label()}}
-            {{ form.year_remod_add(placeholder="", class="form-control") }}
+        {{ form.Neighborhood.label(class="pa-10") }}
+        {{ form.Neighborhood(placeholder="", class="form-control border-bot") }}
 
-            {{ form.exterior_1st.label()}}
-            {{ form.exterior_1st(placeholder="", class="form-control") }}
+        {{ form.surface_total.label(class="pa-10")}}
+        {{ form.surface_total(placeholder="", class="form-control border-bot") }}
 
-            {{ form.bsmt_qual.label()}}
-            {{ form.bsmt_qual(placeholder="", class="form-control") }}
+        {{ form.Overall_Cond.label(class="pa-10")}}
+        {{ form.Overall_Cond(placeholder="Quelle est l'année de construction?", class="form-control border-bot") }}
 
-            {{ form.exter_qual.label()}}
-            {{ form.exter_qual(placeholder="", class="form-control") }}
+        {{ form.Overall_Qual.label(class="pa-10")}}
+        {{ form.Overall_Qual(placeholder="Quelle est l'année de construction?", class="form-control border-bot") }}
+        
+        {{ form.Kitchen_Qual.label(class="pa-10")}}
+        {{ form.Kitchen_Qual(placeholder="", class="form-control border-bot") }}
 
-            {{ form.kitchen_qual.label()}}
-            {{ form.kitchen_qual(placeholder="", class="form-control") }}
+        {{ form.Exter_Qual.label(class="pa-10")}}
+        {{ form.Exter_Qual(placeholder="", class="form-control border-bot") }}
 
-            {{ form.garage_qual.label()}}
-            {{ form.garage_qual(placeholder="", class="form-control") }}
+        {{ form.Garage_Cars.label(class="pa-10")}}
+        {{ form.Garage_Cars(placeholder="", class="form-control border-bot") }}
 
-            {{ form.fireplaces.label()}}
-            {{ form.fireplaces(placeholder="", class="form-control") }}
-            
-            {{ form.fireplace_qu.label()}}
-            {{ form.fireplace_qu(placeholder="", class="form-control") }}
-            
-            </div>
-            <div class="prediction  ">
+        {{ form.BsmtFin_SF_first.label(class="pa-10")}}
+        {{ form.BsmtFin_SF_first(placeholder="", class="form-control border-bot") }}
 
-                {{ form.half_bath.label(class="align")}}
-                {{ form.half_bath(placeholder="Quelle est l'année de construction?", class="form-control") }}
-                
-                {{ form.bsmt_full_bath.label()}}
-                {{ form.bsmt_full_bath(placeholder="", class="form-control") }}
-                
-                {{ form.bsmt_half_bath.label()}}
-                {{ form.bsmt_half_bath(placeholder="", class="form-control") }}
-    
-                {{ form.utilities.label()}}
-                {{ form.utilities(placeholder="", class="form-control") }}
-    
-                {{ form.gr_liv_area.label()}}
-                {{ form.gr_liv_area(placeholder="", class="form-control") }}
-    
-                {{ form.total_bsmt_sf.label()}}
-                {{ form.total_bsmt_sf(placeholder="", class="form-control") }}
-    
-                {{ form.first_flr_sf.label()}}
-                {{ form.first_flr_sf(placeholder="", class="form-control") }}
-    
-                {{ form.second_flr_sf.label()}}
-                {{ form.second_flr_sf(placeholder="", class="form-control") }}
-    
-                {{ form.open_porch_sf.label()}}
-                {{ form.open_porch_sf(placeholder="", class="form-control") }}
-                
-                {{ form.wood_deck_sf.label()}}
-                {{ form.wood_deck_sf(placeholder="", class="form-control") }}
-                
-            </div>
+        {{ form.Misc_Val.label(class="pa-10")}}
+        {{ form.Misc_Val(placeholder="", class="form-control border-bot") }}
 
-            <div class="prediction  ">
+        {{ form.MS_SubClass.label(class="pa-10")}}
+        {{ form.MS_SubClass(placeholder="", class="form-control border-bot") }}
 
-                {{ form.pool_area.label(class="align")}}
-                {{ form.pool_area(placeholder="Quelle est l'année de construction?", class="form-control") }}
-                
-                {{ form.heating_qc.label()}}
-                {{ form.heating_qc(placeholder="", class="form-control") }}
-                
-                {{ form.bsmt_exposure.label()}}
-                {{ form.bsmt_exposure(placeholder="", class="form-control") }}
-    
-                {{ form.paved_drive.label()}}
-                {{ form.paved_drive(placeholder="", class="form-control") }}
-    
-                {{ form.street.label()}}
-                {{ form.street(placeholder="", class="form-control") }}
-    
-                {{ form.central_air.label()}}
-                {{ form.central_air(placeholder="", class="form-control") }}
-    
-                {{ form.condition_1.label()}}
-                {{ form.condition_1(placeholder="", class="form-control") }}
-    
-                {{ form.condition_2.label()}}
-                {{ form.condition_2(placeholder="", class="form-control") }}
-    
-                {{ form.garage_cars.label()}}
-                {{ form.garage_cars(placeholder="", class="form-control") }}
-                
-                {{ form.garage_area.label()}}
-                {{ form.garage_area(placeholder="", class="form-control") }}
-                
-                {{ form.submit(class="form-control red ma-2")}}
-            </div>
+        {{ form.submit(class="form-control red ma-2")}}
 
-                </form>
-    </div>
-</div>
+    </form>
+  </div>
 
 <div class="result">
-    <h1>Estimation</h1>
-    <p class="result-data"> <br> {{data }} </p>
+  <h1>Estimation</h1>
+  <p class="result-data">
+    <br />
+    {{data }}
+  </p>
 </div>
-
 
 {% endblock %}

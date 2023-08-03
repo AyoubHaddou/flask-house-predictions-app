@@ -4,6 +4,7 @@ from application.forms.add_user import  AddUser
 from application.database.users import User
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, logout_user
+from flask import session 
 
 auth = Blueprint('auth', __name__, url_prefix='/')
 
@@ -18,6 +19,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user)
+            session['_user_id'] = user.id 
             flash("Logged in with success", category="success")
             return redirect(url_for('auth.home'))
         else:

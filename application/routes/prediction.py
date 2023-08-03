@@ -5,10 +5,9 @@ import joblib
 from application import db 
 from application.forms.prediction import  PredictionForm
 from application.database.prediction import Prediction
-from application.helpers.preprocessing import (data_engineering, data_preprocessing, features_selection, neighbors_dict, 
-                                               conditions_dict, sale_condition_dict, clean_columns)
+from application.helpers.preprocessing import data_augmentation, neighbors_dict
 
-model = joblib.load(open('model/fit/model.joblib', 'rb'))
+model = joblib.load(open('model/fit/model_16236.joblib', 'rb'))
 prediction = Blueprint('prediction', __name__, url_prefix='/prediction')
 
 @prediction.route('/')
@@ -21,26 +20,22 @@ def predict():
     keys = [i for i in form._fields if i not in ['submit', 'csrf_token']]
     pred = 0
     if form.submit():
-        print(keys)
         dict_prediction = {}
         for var in keys:
             dict_prediction[var]= form[var].data
         df_prediction = pd.DataFrame(dict_prediction, index=[0])
-        df_prediction = features_selection(data_engineering(data_preprocessing(clean_columns(df_prediction), neighbors_dict, conditions_dict, sale_condition_dict)))
+        df_prediction = data_augmentation(df_prediction, neighbors_dict)
         pred = int(model.predict(df_prediction))
         dict_prediction['price'] = pred
         Prediction(**dict_prediction, user_id=current_user.id).save_to_db()
     return render_template('prediction.html', data=f'{pred} $', form=form)
 
-
-
 @prediction.route('/history', methods=['GET','POST'])
 def history():
-    prediction_id = request.args.get('id')
-    print(prediction_id)
-    if prediction_id:
-        Prediction.query.filter(Prediction.id == prediction_id).first().delete_from_db()
-        print("user deleted")
+    prediction_id_to_delete = request.args.get('id')
+    if prediction_id_to_delete:
+        Prediction.query.filter(Prediction.id == prediction_id_to_delete).first().delete_from_db()
+        print("Prediction deleted")
     predictions = db.session.query(Prediction).where(Prediction.user_id == current_user.id).all()
     return render_template('history.html', predictions=predictions)
     

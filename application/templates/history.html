@@ -5,15 +5,16 @@
 <table id="data" class="table table-striped align">
     <thead>
       <tr>
-        <th>Year_Built</th>
-        <th>Total_Bsmt_SF</th>
-        <th>Frst_Flr_SF</th>
-        <th>Gr_Liv_Area</th>
-        <th>Overall_Qual</th>
-        <th>Full_Bath</th>
-        <th>Exter_Qual</th>
-        <th>Kitchen_Qual</th>
         <th>Neighborhood</th>
+        <th>Overall_Cond</th>
+        <th>Overall_Qual</th>
+        <th>Kitchen_Qual</th>
+        <th>Exter_Qual</th>
+        <th>Garage_Cars</th>
+        <th>BsmtFin_SF_first</th>
+        <th>Misc_Val</th>
+        <th>MS_SubClass</th>
+        <th>surface_total</th>
         <th>Price</th>
         <th>Created_on</th>
         <th>Actions</th>
@@ -22,15 +23,16 @@
     <tbody>
       {% for prediction in predictions %}
         <tr>
-          <td>{{ prediction.year_remod_add }}</td>
-          <td>{{ prediction.total_bsmt_sf }}</td>
-          <td>{{ prediction.first_flr_sf }}</td>
-          <td>{{ prediction.gr_liv_area }}</td>
-          <td>{{ prediction.overall_qual }}</td>
-          <td>{{ prediction.full_bath }}</td>
-          <td>{{ prediction.exter_qual }}</td>
-          <td>{{ prediction.kitchen_qual }}</td>
-          <td>{{ prediction.neighborhood }}</td>
+          <td>{{ prediction.Neighborhood }}</td>
+          <td>{{ prediction.Overall_Cond }}</td>
+          <td>{{ prediction.Overall_Qual }}</td>
+          <td>{{ prediction.Kitchen_Qual }}</td>
+          <td>{{ prediction.Exter_Qual }}</td>
+          <td>{{ prediction.Garage_Cars }}</td>
+          <td>{{ prediction.BsmtFin_SF_first }}</td>
+          <td>{{ prediction.Misc_Val }}</td>
+          <td>{{ prediction.MS_SubClass }}</td>
+          <td>{{ prediction.surface_total }}</td>
           <td>{{ prediction.price }}</td>
           <td>{{ prediction.created_on }}</td>
           <td> <a href="{{ url_for('prediction.history', id=prediction.id)}}"> Delete </a></td>

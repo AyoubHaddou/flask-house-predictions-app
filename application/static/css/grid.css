@@ -3,18 +3,13 @@ body{
     font-family: 'Charis SIL', serif;
     border:1px solid #424580;
     display: grid;
-    grid-template-columns: 30vh 1fr 1fr 1fr;
-    grid-template-rows: 9% 41% 41% 9%;
+    grid-template-columns: 30wh 1fr 1fr 1fr;
+    grid-template-rows: 1fr 15fr 1fr;
     grid-template-areas:
         "nav nav nav nav"
         "main1 main1 main2 main2"
         "main1 main1  main3  main3"
         "foot foot foot foot";
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    box-sizing: content-box;
 }
 
 * {
@@ -55,6 +50,7 @@ nav ul a {
 
 .prediction {
     grid-area : main1;
+    justify-content: center;
     padding: 2%;
 }
 
@@ -94,11 +90,6 @@ nav ul a {
 .main3 {
     grid-area :main3;
     background-color: rgba(95, 125, 165, 0.5);
-}
-
-.block {
-    display: flex;
-    flex-direction: columns;
 }
 
 
@@ -168,7 +159,15 @@ h1, .align {
 }
 
 .ma-2 {
-    margin-top: 0.5%;
+    margin-top: 2% ;
+}
+
+.pa-10 {
+    margin-top: 5px;
+}
+
+.border-bot {
+    border-bottom: 2px solid black;
 }
 
 .form-inside {

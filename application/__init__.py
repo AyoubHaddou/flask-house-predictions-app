@@ -7,11 +7,23 @@ load_dotenv()
 
 db = SQLAlchemy()
 
-def create_app():
+def create_app(test=False):
+    
+    sqlalchemy_database_uri = os.getenv('SQLALCHEMY_DATABASE_URI_PROD')
+    path_database = "application/database/database.db"
+    testing = False 
+    if test:
+        sqlalchemy_database_uri = os.getenv('SQLALCHEMY_DATABASE_URI_TEST')
+        path_database = "application/database/test.db"
+        testing = True 
+        
+    
+    
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
     app.config["WTF_CSRF_SECRET_KEY"] = os.getenv('WTF_CSRF_SECRET_KEY')
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config["SQLALCHEMY_DATABASE_URI"] = sqlalchemy_database_uri
+    app.config["TESTING"] = testing 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     from application.database.users import User, init_db
@@ -29,11 +41,12 @@ def create_app():
     from application.routes.auth import auth
     app.register_blueprint(prediction)
     app.register_blueprint(auth)
-    
-    if not os.path.isfile("application/database/database.db"):
+    if not os.path.isfile(path_database):
         app.app_context().push()
+        db.create_all()
         init_db()
+        print('user added successfully')
     
     return app
 
-app = create_app()
+app = create_app(test=True)
